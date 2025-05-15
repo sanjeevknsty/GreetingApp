@@ -7,13 +7,13 @@ public class GreetingService {
     public String getGreeting(User user) {
 //        return "Hello World";
     	 if (user.getFirstName() != null && user.getLastName() != null) {
-             return "Hello, " + user.getFirstName() + " " + user.getLastName();
+             return  user.getFirstName() + " " + user.getLastName();
          } else if (user.getFirstName() != null) {
-             return "Hello, " + user.getFirstName();
+             return user.getFirstName();
          } else if (user.getLastName() != null) {
-             return "Hello, " + user.getLastName();
+             return user.getLastName();
          } else {
-             return "Hello, World!";
+             return "DEFAULT_VALUE";
          }
     }
 		

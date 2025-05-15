@@ -55,9 +55,14 @@ public class GreetingController {
 //    }
     
     @PostMapping("/postUser")
-    public Greeting getGreeting(@RequestBody User user) {
+    public Greeting postGreeting(@RequestBody User user) {
     	Greeting greet =new Greeting(counter.incrementAndGet(),greetingService.getGreeting(user));
         return greetingRepository.save(greet);
+    }
+    
+    @GetMapping("/getById/{id}")
+    public Greeting getGreeting(@PathVariable long id) {
+    	return greetingRepository.findById(id).orElseThrow(() -> new RuntimeException("Greeting not found"));
     }
 }
 
