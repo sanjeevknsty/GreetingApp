@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/greeting")
+
 public class GreetingController {
 	private static final String template ="Hello,%s";
 	private final AtomicLong counter = new AtomicLong();
     private final GreetingService greetingService;
+    
+    
 	@GetMapping("/get")
 	public Greeting greeting(@RequestParam(value ="name", defaultValue="world") String name) {
 		return new Greeting(counter.incrementAndGet(),String.format(template, name));
@@ -42,10 +46,9 @@ public class GreetingController {
 	public GreetingController(GreetingService greetingService) {
         this.greetingService = greetingService;
     }
-	@RequestMapping("/greeting")
-    @GetMapping("/")
-    public String getGreeting() {
-        return greetingService.getGreeting();
+    @PostMapping("/postUser")
+    public String getGreeting(@RequestBody User user) {
+        return greetingService.getGreeting(user);
     }
 }
 
