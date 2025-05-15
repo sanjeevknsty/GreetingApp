@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class GreetingController {
 	private static final String template ="Hello,%s";
 	private final AtomicLong counter = new AtomicLong();
-	
-	@GetMapping("/greeting")
+    private final GreetingService greetingService;
+	@GetMapping("/get")
 	public Greeting greeting(@RequestParam(value ="name", defaultValue="world") String name) {
 		return new Greeting(counter.incrementAndGet(),String.format(template, name));
 	}
@@ -38,7 +39,14 @@ public class GreetingController {
 	    return "Greeting with ID " + id + " deleted.";
 	}
 
-	
+	public GreetingController(GreetingService greetingService) {
+        this.greetingService = greetingService;
+    }
+	@RequestMapping("/greeting")
+    @GetMapping("/")
+    public String getGreeting() {
+        return greetingService.getGreeting();
+    }
 }
 
 class Greeting {
