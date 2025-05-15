@@ -71,5 +71,13 @@ public class GreetingController {
     	return greetingRepository.findAll();
     }
     
+    @PutMapping("editById/{id}")
+    public Greeting editById(@PathVariable long id,@RequestParam(value="name") String name) {
+    	return greetingRepository.findById(id).map((i)->{
+    		i.setName(name);
+    		return greetingRepository.save(i);
+    	}).orElseThrow(() -> new RuntimeException("Greeting not found"));
+    }
+    
 }
 
