@@ -1,5 +1,6 @@
 package com.example.GreetingApp;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -61,8 +62,14 @@ public class GreetingController {
     }
     
     @GetMapping("/getById/{id}")
-    public Greeting getGreeting(@PathVariable long id) {
+    public Greeting getGreetingById(@PathVariable long id) {
     	return greetingRepository.findById(id).orElseThrow(() -> new RuntimeException("Greeting not found"));
     }
+    
+    @GetMapping("/getAll")
+    public List<Greeting> getGreetings() {
+    	return greetingRepository.findAll();
+    }
+    
 }
 
